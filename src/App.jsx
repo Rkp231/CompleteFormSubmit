@@ -25,19 +25,18 @@ function App() {
       [e.target.name]:
         e.target.type === "file" ? e.target.files[0] : e.target.value,
     }));
+    // setFormData({
+    //   ...formData,
+    //   [e.target.name]:
+    //     e.target.type === "file" ? e.target.files[0] : e.target.value,
+    // });
   };
-  const handleSubjectChange = (sub) => {
+  const handleSubjectChange = (e) => {
     setFormData((prev) => ({
       ...prev,
-      subjects: prev.subjects.includes(sub)
-        ? prev.subjects.filter((subject) => subject !== sub)
-        : [...prev.subjects, sub],
-      //or if initially the subject:[] i.e. no default value
-      // then,
-      // setFormData((prev) => ({
-      //   ...prev,
-      //   subjects: prev.subjects ? [...prev.subjects, sub] : [sub],
-      // }));
+      subjects: e.target.checked
+        ? [...prev.subjects, e.target.name]
+        : prev.subjects.filter((subject) => subject !== e.target.name),
     }));
   };
 
@@ -143,10 +142,10 @@ function App() {
               <label key={index} className="subject-option">
                 <input
                   type="checkbox"
-                  name="subjects"
+                  name={subject}
                   id={subject}
                   checked={formData.subjects.includes(subject)}
-                  onChange={() => handleSubjectChange(subject)}
+                  onChange={handleSubjectChange}
                 />
                 {subject.charAt(0).toUpperCase() + subject.slice(1)}
               </label>
